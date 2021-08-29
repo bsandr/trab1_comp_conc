@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
         return 1;
     }
 
-    NTHREADS = atoll(argv[1]);
+    NTHREADS = atoi(argv[1]);
 
 
     //aloca memoria 
