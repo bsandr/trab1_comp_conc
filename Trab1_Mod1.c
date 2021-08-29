@@ -71,6 +71,7 @@ int main(int argc, char *argv[]){
     while(fgets(content, FILE_SIZE-1, file)) {
 
         char* temp = strdup(content);
+        char *taxa_temp;
 
         if((nome_inst[i] = strtok(temp, ";")) != NULL) {
             nome_inst[i] = strdup(nome_inst[i]);
@@ -79,10 +80,11 @@ int main(int argc, char *argv[]){
         if((nome_curso[i] = strtok(NULL, ";")) != NULL) {
             nome_curso[i] = strdup(nome_curso[i]);
         }
-        /**
-        if((taxa[i] = strtok(NULL, ";")) != NULL) {
-            taxa[i] = strdup(taxa[i]);
-        }*/
+        
+        if((taxa_temp = strtok(NULL, ";")) != NULL) {
+            taxa_temp = strdup(taxa_temp);
+            taxa[i] = atof(taxa_temp);
+        }
         
         i++;
     }   
