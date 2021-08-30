@@ -35,11 +35,11 @@ void * tarefa(void *arg) {
   thread_valores->maior_taxa = taxa[0];
 
   for(int i = id; i < SIZE; i+=NTHREADS){
-    if(taxa[i] > thread_valores->maior_taxa) {
+    if((taxa[i] > thread_valores->maior_taxa) && (taxa[i] < 100.00)) {
             thread_valores->maior_taxa = taxa[i];
             thread_valores->indice_maior = i;
         }
-        if(taxa[i] < thread_valores->menor_taxa) {
+        if((taxa[i] < thread_valores->menor_taxa) && (taxa[i] > 0.00)) {
             thread_valores->menor_taxa = taxa[i];
             thread_valores->indice_menor = i;
         }
@@ -59,15 +59,16 @@ int main(int argc, char *argv[]){
     pthread_t *tid; //identificadores das threads no sistema
     double inicio, fim;
     taxas *retorno;
+    char *path;
 
     //recebe os parametros de entrada e os trata
-    if(argc<2){
-        fprintf(stderr,"Digite %s <numero de threads>\n",argv[0]);
+    if(argc<3){
+        fprintf(stderr,"Digite %s <numero de threads> <path do arquivo>\n",argv[0]);
         return 1;
     }
 
     NTHREADS = atoi(argv[1]);
-
+    path = argv[2];
 
     //aloca memoria 
     nome_inst = (char **) malloc(sizeof(char*)*SIZE);
@@ -89,7 +90,6 @@ int main(int argc, char *argv[]){
     
     //leitura de arquivos e preenchimento dos vetores
     FILE *file;
-    char path[] = "./indicadores.CSV";
 
     file = fopen(path, "r");
     if (!file) {
@@ -125,11 +125,11 @@ int main(int argc, char *argv[]){
     menor_seq = taxa[0];
     //sequencial 
     for(int i = 0; i < SIZE; i++){
-        if(taxa[i]>maior_seq) {
+        if((taxa[i] > maior_seq) && (taxa[i] < 100.00) ) {
             maior_seq = taxa[i];
             i_maior_seq = i;
         }
-        if(taxa[i]<menor_seq) {
+        if( (taxa[i] < menor_seq) && (taxa[i] > 0.00)) {
             menor_seq = taxa[i];
             i_menor_seq = i;
         }
